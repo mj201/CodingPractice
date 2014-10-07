@@ -61,10 +61,37 @@ namespace PreOrderTraversal
         /// <returns>A binary search tree created from the input</returns>
         public static Node CreateBST(int[] preOrderTraversal)
         {
-            // ========================================================
-            // FILL IN THE CODE FOR THIS FUNCTION HERE !!
-            // ========================================================
-            return null;
+            if (preOrderTraversal.Length < 1) return null;
+            int start = 0;
+            int end = preOrderTraversal.Length;
+            Node root = new Node(preOrderTraversal[start]);
+
+            int index = end;
+            for (int i = start; i < end; i++)
+            {
+                if (preOrderTraversal[i] > preOrderTraversal[start])
+                {
+                    index = i;
+                    break;
+                }
+            }
+            for (int i = index; i < end; i++)
+            {
+                if (preOrderTraversal[i] < preOrderTraversal[start])
+                {
+                    return null;
+                }
+            }
+
+            int[] leftTraversal = new int[index - start - 1];
+            Array.Copy(preOrderTraversal, start + 1, leftTraversal, 0, leftTraversal.Length);
+            root.Left = CreateBST(leftTraversal);
+
+            int[] rightTraversal = new int[end - index];
+            Array.Copy(preOrderTraversal, index, rightTraversal, 0, rightTraversal.Length);
+            root.Right = CreateBST(rightTraversal);
+
+            return root;
         }
 
         /// <summary>
