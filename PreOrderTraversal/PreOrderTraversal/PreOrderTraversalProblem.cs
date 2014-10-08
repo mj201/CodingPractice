@@ -61,10 +61,66 @@ namespace PreOrderTraversal
         /// <returns>A binary search tree created from the input</returns>
         public static Node CreateBST(int[] preOrderTraversal)
         {
-            // ========================================================
-            // FILL IN THE CODE FOR THIS FUNCTION HERE !!
-            // ========================================================
-            return null;
+            if (preOrderTraversal == null || preOrderTraversal.Length == 0)
+            {
+                return null;
+            }
+
+            Node root = null;           
+
+            foreach(int newNode in preOrderTraversal)
+            {
+                Insert_Node(new Node(newNode), ref root);
+            }
+
+            return root;
+        }
+
+        /// <summary>
+        /// Inserts a node into the binary search tree
+        /// </summary>
+        /// <param name="n">The new node to insert</param>
+        /// <param name="root">the root of the tree</param>
+        private static void Insert_Node(Node n, ref Node root)
+        {
+            if(root == null)
+            {
+                root = n;
+                return;
+            }
+
+            Node searchNode = root;
+            Node parentNode = null;
+            bool insertLeft = false;
+
+            //search through nodes to place n, starting @ root
+            while(searchNode!=null)
+            {
+                parentNode = searchNode;
+
+                if(searchNode.Value < n.Value)
+                {
+                    searchNode = searchNode.Right;
+                    insertLeft = false;
+                }
+                else
+                {
+                    searchNode = searchNode.Left;
+                    insertLeft = true;
+                }
+            }
+
+            searchNode = n;
+            
+            if(insertLeft)
+            {
+                parentNode.Left = searchNode;
+            }else
+            {
+                parentNode.Right = searchNode;
+            }
+
+            return;
         }
 
         /// <summary>
