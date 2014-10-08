@@ -130,10 +130,35 @@ namespace PreOrderTraversal
         /// <returns>A boolean indicating whether or not the tree is a binary search tree</returns>
         public static bool IsBST(Node tree)
         {
-            // ========================================================
-            // FILL IN THE CODE FOR THIS FUNCTION HERE !!
-            // ========================================================
-            return false;
+            return isValidBST(tree, int.MinValue, int.MaxValue);
+        }
+
+
+        /// <summary>
+        /// Given a node, determine if it is correctly in a binary search tree
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
+        private static bool isValidBST(Node node, int minValue, int maxValue)
+        {
+            if (node == null)
+            {
+                return true;
+            }
+
+            if( node.Value > minValue
+                && node.Value < maxValue
+                && isValidBST(node.Left, minValue, Math.Min(node.Value, maxValue))
+                && isValidBST(node.Left, Math.Max(node.Value, minValue), maxValue))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
