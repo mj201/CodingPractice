@@ -75,13 +75,6 @@ namespace PreOrderTraversal
                     break;
                 }
             }
-            for (int i = index; i < end; i++)
-            {
-                if (preOrderTraversal[i] < preOrderTraversal[start])
-                {
-                    return null;
-                }
-            }
 
             int[] leftTraversal = new int[index - start - 1];
             Array.Copy(preOrderTraversal, start + 1, leftTraversal, 0, leftTraversal.Length);
@@ -101,10 +94,27 @@ namespace PreOrderTraversal
         /// <returns>A boolean indicating whether or not the tree is a binary search tree</returns>
         public static bool IsBST(Node tree)
         {
-            // ========================================================
-            // FILL IN THE CODE FOR THIS FUNCTION HERE !!
-            // ========================================================
-            return false;
+            return isValidBST(tree, int.MinValue, int.MaxValue);
+        }
+
+        /// <summary>
+        /// This function takes a subtree of a binary tree as a parameter and determines if it is in fact a binary search tree
+        /// </summary>
+        /// <param name="node">The root node of the subtree to test</param>
+        /// <param name="min">The min value of the subtree</param>
+        /// <param name="max">The max value of the subtree</param>
+        /// <returns>A boolean indicating whether or not the tree is a binary search tree</returns>
+        private static bool isValidBST(Node node, int min, int max)
+        {
+            if (node == null)
+                return true;
+            if (node.Value > min
+                && node.Value < max
+                && isValidBST(node.Left, min, Math.Min(node.Value, max))
+                && isValidBST(node.Right, Math.Max(node.Value, min), max))
+                return true;
+            else
+                return false;
         }
 
         /// <summary>
