@@ -109,10 +109,29 @@ namespace PreOrderTraversal
         /// <returns>A boolean indicating whether or not the tree is a binary search tree</returns>
         public static bool IsBST(Node tree)
         {
-            // ========================================================
-            // FILL IN THE CODE FOR THIS FUNCTION HERE !!
-            // ========================================================
-            return false;
+            if (tree == null)
+            { 
+                // This is a special case in for this particular program. My CreateBST function already does a check to see if
+                // a proper BST can be made from the traversal and returns null if it can't. Therefore, if the input here is null,
+                // We know it's an invalid tree.
+                return false;
+            }
+            return IsBST(tree, int.MaxValue, int.MinValue);
+        }
+
+        private static bool IsBST(Node node, int upperBound, int lowerBound)
+        {
+            if (node == null)
+            {
+                return true;
+            }
+
+            if (node.Value > upperBound || node.Value < lowerBound)
+            {
+                return false;
+            }
+
+            return IsBST(node.Left, node.Value, lowerBound) && IsBST(node.Right, upperBound, node.Value);
         }
 
         /// <summary>
